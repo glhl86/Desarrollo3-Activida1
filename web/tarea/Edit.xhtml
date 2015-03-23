@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditTareaTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditTareaLabel_tareaId}" for="tareaId" />
+                    <h:inputText id="tareaId" value="#{tareaController.selected.tareaId}" title="#{bundle.EditTareaTitle_tareaId}" required="true" requiredMessage="#{bundle.EditTareaRequiredMessage_tareaId}"/>
+                    <h:outputLabel value="#{bundle.EditTareaLabel_persona}" for="persona" />
+                    <h:selectOneMenu id="persona" value="#{tareaController.selected.persona}" title="#{bundle.EditTareaTitle_persona}" >
+                        <f:selectItems value="#{personaController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditTareaLabel_proyecto}" for="proyecto" />
+                    <h:selectOneMenu id="proyecto" value="#{tareaController.selected.proyecto}" title="#{bundle.EditTareaTitle_proyecto}" >
+                        <f:selectItems value="#{proyectoController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditTareaLabel_nombre}" for="nombre" />
+                    <h:inputText id="nombre" value="#{tareaController.selected.nombre}" title="#{bundle.EditTareaTitle_nombre}" />
+                    <h:outputLabel value="#{bundle.EditTareaLabel_descripcion}" for="descripcion" />
+                    <h:inputText id="descripcion" value="#{tareaController.selected.descripcion}" title="#{bundle.EditTareaTitle_descripcion}" />
+                    <h:outputLabel value="#{bundle.EditTareaLabel_fecha}" for="fecha" />
+                    <h:inputText id="fecha" value="#{tareaController.selected.fecha}" title="#{bundle.EditTareaTitle_fecha}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditTareaLabel_ejecucion}" for="ejecucion" />
+                    <h:inputText id="ejecucion" value="#{tareaController.selected.ejecucion}" title="#{bundle.EditTareaTitle_ejecucion}" />
+                    <h:outputLabel value="#{bundle.EditTareaLabel_estadoTarea}" for="estadoTarea" />
+                    <h:inputText id="estadoTarea" value="#{tareaController.selected.estadoTarea}" title="#{bundle.EditTareaTitle_estadoTarea}" />
+                </h:panelGrid>
+                <h:commandLink action="#{tareaController.update}" value="#{bundle.EditTareaSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditTareaViewLink}"/>
+                <br />
+                <h:commandLink action="#{tareaController.prepareList}" value="#{bundle.EditTareaShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditTareaIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

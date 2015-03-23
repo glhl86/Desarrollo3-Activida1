@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21-mar-2015 8:56:03 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="modelos.Persona" table="persona" catalog="taller1" optimistic-lock="version">
+        <id name="personaId" type="int">
+            <column name="persona_id" />
+            <generator class="assigned" />
+        </id>
+        <property name="nombre" type="string">
+            <column name="nombre" length="45" />
+        </property>
+        <property name="apellidos" type="string">
+            <column name="apellidos" length="90" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="45" />
+        </property>
+        <set name="tareas" table="tarea" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="Persona_persona_id" />
+            </key>
+            <one-to-many class="modelos.Tarea" />
+        </set>
+    </class>
+</hibernate-mapping>
