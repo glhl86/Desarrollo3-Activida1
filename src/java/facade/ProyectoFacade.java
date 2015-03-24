@@ -3,20 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Beans;
+package facade;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import modelos.Persona;
+import modelos.Proyecto;
 
 /**
  *
  * @author glhl__000
  */
 @Stateless
-public class PersonaFacade extends AbstractFacade<Persona> {
-    @PersistenceContext(unitName = "actividadPU")
+public class ProyectoFacade extends AbstractFacade<Proyecto> {
+    
     private EntityManager em;
 
     @Override
@@ -24,8 +24,8 @@ public class PersonaFacade extends AbstractFacade<Persona> {
         return em;
     }
 
-    public PersonaFacade() {
-        super(Persona.class);
+    public ProyectoFacade() {
+        super(Proyecto.class);
     }
     
 }
