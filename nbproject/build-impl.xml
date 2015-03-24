@@ -1043,7 +1043,7 @@ exists or setup the property manually. For example like this:
         <!-- This target can be overriden by NetBeans modules. Don't override it directly, use -post-run-deploy task instead. -->
     </target>
     <target name="-run-deploy-am">
-        <!-- Task to deploy to the Access Manager runtime. -->
+        <!-- Task t o deploy to the Access Manager runtime. -->
     </target>
     <target depends="init,-init-cos,compile,compile-jsps,-do-compile-single-jsp,-pre-dist,-do-tmp-dist-with-manifest,-do-tmp-dist-without-manifest,-pre-run-deploy,-pre-nbmodule-run-deploy,-run-deploy-nb,-init-deploy-ant,-deploy-ant,-run-deploy-am,-post-nbmodule-run-deploy,-post-run-deploy,-do-update-breakpoints" name="run-deploy"/>
     <target if="netbeans.home" name="-run-deploy-nb">
