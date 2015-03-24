@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Beans;
+package facade;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -16,7 +16,7 @@ import modelos.Tarea;
  */
 @Stateless
 public class TareaFacade extends AbstractFacade<Tarea> {
-    @PersistenceContext(unitName = "actividadPU")
+   
     private EntityManager em;
 
     @Override

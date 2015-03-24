@@ -3,51 +3,45 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/template.xhtml">
-        <ui:define name="title">
-            <h:outputText value="#{bundle.CreateTareaTitle}"></h:outputText>
-        </ui:define>
-        <ui:define name="body">
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
-            <h:form>
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.CreateTareaLabel_tareaId}" for="tareaId" />
-                    <h:inputText id="tareaId" value="#{tareaController.selected.tareaId}" title="#{bundle.CreateTareaTitle_tareaId}" required="true" requiredMessage="#{bundle.CreateTareaRequiredMessage_tareaId}"/>
-                    <h:outputLabel value="#{bundle.CreateTareaLabel_persona}" for="persona" />
-                    <h:selectOneMenu id="persona" value="#{tareaController.selected.persona}" title="#{bundle.CreateTareaTitle_persona}" >
-                        <f:selectItems value="#{personaController.itemsAvailableSelectOne}"/>
-                    </h:selectOneMenu>
-                    <h:outputLabel value="#{bundle.CreateTareaLabel_proyecto}" for="proyecto" />
-                    <h:selectOneMenu id="proyecto" value="#{tareaController.selected.proyecto}" title="#{bundle.CreateTareaTitle_proyecto}" >
-                        <f:selectItems value="#{proyectoController.itemsAvailableSelectOne}"/>
-                    </h:selectOneMenu>
-                    <h:outputLabel value="#{bundle.CreateTareaLabel_nombre}" for="nombre" />
-                    <h:inputText id="nombre" value="#{tareaController.selected.nombre}" title="#{bundle.CreateTareaTitle_nombre}" />
-                    <h:outputLabel value="#{bundle.CreateTareaLabel_descripcion}" for="descripcion" />
-                    <h:inputText id="descripcion" value="#{tareaController.selected.descripcion}" title="#{bundle.CreateTareaTitle_descripcion}" />
-                    <h:outputLabel value="#{bundle.CreateTareaLabel_fecha}" for="fecha" />
-                    <h:inputText id="fecha" value="#{tareaController.selected.fecha}" title="#{bundle.CreateTareaTitle_fecha}" >
-                        <f:convertDateTime pattern="MM/dd/yyyy" />
-                    </h:inputText>
-                    <h:outputLabel value="#{bundle.CreateTareaLabel_ejecucion}" for="ejecucion" />
-                    <h:inputText id="ejecucion" value="#{tareaController.selected.ejecucion}" title="#{bundle.CreateTareaTitle_ejecucion}" />
-                    <h:outputLabel value="#{bundle.CreateTareaLabel_estadoTarea}" for="estadoTarea" />
-                    <h:inputText id="estadoTarea" value="#{tareaController.selected.estadoTarea}" title="#{bundle.CreateTareaTitle_estadoTarea}" />
-                </h:panelGrid>
-                <br />
-                <h:commandLink action="#{tareaController.create}" value="#{bundle.CreateTareaSaveLink}" />
-                <br />
-                <br />
-                <h:commandLink action="#{tareaController.prepareList}" value="#{bundle.CreateTareaShowAllLink}" immediate="true"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{bundle.CreateTareaIndexLink}"/>
+    <ui:composition>
+
+        <p:dialog id="TareaCreateDlg" widgetVar="TareaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateTareaTitle}">
+            <h:form id="TareaCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{tareaController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateTareaLabel_tareaId}" for="tareaId" />
+                        <p:inputText id="tareaId" value="#{tareaController.selected.tareaId}" title="#{bundle.CreateTareaTitle_tareaId}" required="true" requiredMessage="#{bundle.CreateTareaRequiredMessage_tareaId}"/>
+                        <p:outputLabel value="#{bundle.CreateTareaLabel_persona}" for="persona" />
+                        <p:selectOneMenu id="persona" value="#{tareaController.selected.persona}" >
+                            <f:selectItems value="#{personaController.itemsAvailableSelectOne}"
+                                           var="personaItem"
+                                           itemValue="#{personaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateTareaLabel_proyecto}" for="proyecto" />
+                        <p:selectOneMenu id="proyecto" value="#{tareaController.selected.proyecto}" >
+                            <f:selectItems value="#{proyectoController.itemsAvailableSelectOne}"
+                                           var="proyectoItem"
+                                           itemValue="#{proyectoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateTareaLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{tareaController.selected.nombre}" title="#{bundle.CreateTareaTitle_nombre}" />
+                        <p:outputLabel value="#{bundle.CreateTareaLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{tareaController.selected.descripcion}" title="#{bundle.CreateTareaTitle_descripcion}" />
+                        <p:outputLabel value="#{bundle.CreateTareaLabel_fecha}" for="fecha" />
+                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{tareaController.selected.fecha}" title="#{bundle.EditTareaTitle_fecha}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateTareaLabel_ejecucion}" for="ejecucion" />
+                        <p:inputText id="ejecucion" value="#{tareaController.selected.ejecucion}" title="#{bundle.CreateTareaTitle_ejecucion}" />
+                        <p:outputLabel value="#{bundle.CreateTareaLabel_estadoTarea}" for="estadoTarea" />
+                        <p:inputText id="estadoTarea" value="#{tareaController.selected.estadoTarea}" title="#{bundle.CreateTareaTitle_estadoTarea}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tareaController.create}" value="#{bundle.Save}" update="display,:TareaListForm:datalist,:growl" oncomplete="handleSubmit(args,'TareaCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="TareaCreateDialog.hide()"/>
+                </h:panelGroup>
             </h:form>
-        </ui:define>
-    </ui:composition>
+        </p:dialog>
 
+    </ui:composition>
 </html>

@@ -3,37 +3,29 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/template.xhtml">
-        <ui:define name="title">
-            <h:outputText value="#{bundle.CreatePersonaTitle}"></h:outputText>
-        </ui:define>
-        <ui:define name="body">
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
-            <h:form>
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.CreatePersonaLabel_personaId}" for="personaId" />
-                    <h:inputText id="personaId" value="#{personaController.selected.personaId}" title="#{bundle.CreatePersonaTitle_personaId}" required="true" requiredMessage="#{bundle.CreatePersonaRequiredMessage_personaId}"/>
-                    <h:outputLabel value="#{bundle.CreatePersonaLabel_nombre}" for="nombre" />
-                    <h:inputText id="nombre" value="#{personaController.selected.nombre}" title="#{bundle.CreatePersonaTitle_nombre}" />
-                    <h:outputLabel value="#{bundle.CreatePersonaLabel_apellidos}" for="apellidos" />
-                    <h:inputText id="apellidos" value="#{personaController.selected.apellidos}" title="#{bundle.CreatePersonaTitle_apellidos}" />
-                    <h:outputLabel value="#{bundle.CreatePersonaLabel_email}" for="email" />
-                    <h:inputText id="email" value="#{personaController.selected.email}" title="#{bundle.CreatePersonaTitle_email}" />
-                </h:panelGrid>
-                <br />
-                <h:commandLink action="#{personaController.create}" value="#{bundle.CreatePersonaSaveLink}" />
-                <br />
-                <br />
-                <h:commandLink action="#{personaController.prepareList}" value="#{bundle.CreatePersonaShowAllLink}" immediate="true"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{bundle.CreatePersonaIndexLink}"/>
+    <ui:composition>
+
+        <p:dialog id="PersonaCreateDlg" widgetVar="PersonaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreatePersonaTitle}">
+            <h:form id="PersonaCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{personaController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreatePersonaLabel_personaId}" for="personaId" />
+                        <p:inputText id="personaId" value="#{personaController.selected.personaId}" title="#{bundle.CreatePersonaTitle_personaId}" required="true" requiredMessage="#{bundle.CreatePersonaRequiredMessage_personaId}"/>
+                        <p:outputLabel value="#{bundle.CreatePersonaLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{personaController.selected.nombre}" title="#{bundle.CreatePersonaTitle_nombre}" />
+                        <p:outputLabel value="#{bundle.CreatePersonaLabel_apellidos}" for="apellidos" />
+                        <p:inputText id="apellidos" value="#{personaController.selected.apellidos}" title="#{bundle.CreatePersonaTitle_apellidos}" />
+                        <p:outputLabel value="#{bundle.CreatePersonaLabel_email}" for="email" />
+                        <p:inputText id="email" value="#{personaController.selected.email}" title="#{bundle.CreatePersonaTitle_email}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{personaController.create}" value="#{bundle.Save}" update="display,:PersonaListForm:datalist,:growl" oncomplete="handleSubmit(args,'PersonaCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PersonaCreateDialog.hide()"/>
+                </h:panelGroup>
             </h:form>
-        </ui:define>
-    </ui:composition>
+        </p:dialog>
 
+    </ui:composition>
 </html>

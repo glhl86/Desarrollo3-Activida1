@@ -3,35 +3,27 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
- 
-    <ui:composition template="/template.xhtml">
-        <ui:define name="title">
-            <h:outputText value="#{bundle.CreateProyectoTitle}"></h:outputText>
-        </ui:define>  
-        <ui:define name="body">
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
-            <h:form>
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.CreateProyectoLabel_proyectoId}" for="proyectoId" />
-                    <h:inputText id="proyectoId" value="#{proyectoController.selected.proyectoId}" title="#{bundle.CreateProyectoTitle_proyectoId}" required="true" requiredMessage="#{bundle.CreateProyectoRequiredMessage_proyectoId}"/>
-                    <h:outputLabel value="#{bundle.CreateProyectoLabel_nombre}" for="nombre" />
-                    <h:inputText id="nombre" value="#{proyectoController.selected.nombre}" title="#{bundle.CreateProyectoTitle_nombre}" />
-                    <h:outputLabel value="#{bundle.CreateProyectoLabel_descripcion}" for="descripcion" />
-                    <h:inputText id="descripcion" value="#{proyectoController.selected.descripcion}" title="#{bundle.CreateProyectoTitle_descripcion}" />
-                </h:panelGrid>
-                <br />
-                <h:commandLink action="#{proyectoController.create}" value="#{bundle.CreateProyectoSaveLink}" />
-                <br />
-                <br />
-                <h:commandLink action="#{proyectoController.prepareList}" value="#{bundle.CreateProyectoShowAllLink}" immediate="true"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{bundle.CreateProyectoIndexLink}"/>
-            </h:form>
-        </ui:define>
-    </ui:composition>
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
+    <ui:composition>
+
+        <p:dialog id="ProyectoCreateDlg" widgetVar="ProyectoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateProyectoTitle}">
+            <h:form id="ProyectoCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{proyectoController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateProyectoLabel_proyectoId}" for="proyectoId" />
+                        <p:inputText id="proyectoId" value="#{proyectoController.selected.proyectoId}" title="#{bundle.CreateProyectoTitle_proyectoId}" required="true" requiredMessage="#{bundle.CreateProyectoRequiredMessage_proyectoId}"/>
+                        <p:outputLabel value="#{bundle.CreateProyectoLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{proyectoController.selected.nombre}" title="#{bundle.CreateProyectoTitle_nombre}" />
+                        <p:outputLabel value="#{bundle.CreateProyectoLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{proyectoController.selected.descripcion}" title="#{bundle.CreateProyectoTitle_descripcion}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{proyectoController.create}" value="#{bundle.Save}" update="display,:ProyectoListForm:datalist" oncomplete="handleSubmit(args,'ProyectoCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ProyectoCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
 </html>
